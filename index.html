@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Edson Alves — desenvolvedor full-stack</title>
+  <meta name="description" content="Edson Alves, desenvolvedor full-stack no Brasil. Projetos, stack e contato, aberto a vagas e a projetos de sites e sistemas.">
+  <meta name="theme-color" content="#161617">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- primeira pintura: nunca a página crua. O fundo liga aqui, antes de qualquer arquivo; a folha do site vem em
+       <link> (segura a pintura até chegar), nunca pelo TS. Nada transiciona até a página assentar (main.ts libera). -->
+  <style>
+    html { background: #0c0c0d; }
+    body { margin: 0; }
+    html:not(.assentou) *, html:not(.assentou) ::before, html:not(.assentou) ::after { transition: none !important; }
+  </style>
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- camada fixa do globo 3D: atrás do conteúdo, na frente da palavra gigante -->
+  <canvas class="globo" aria-hidden="true"></canvas>
+  <!-- As cidades que acendem no globo (src/cena/globo.ts), em latitude e longitude; o nome é só para
+       quem edita. De 4 a 30 ficam bem. data-cai e data-assume: na frase "Uma cai, outra segura.", a cidade que apaga e
+       a vizinha que brilha mais (a posição na lista, contando do 0). data-voa: a que se solta e pousa no ".com". -->
+  <ol class="globo__regioes" hidden data-cai="7" data-assume="8" data-voa="10">
+    <li data-lat="-23.5" data-lon="-46.6">América do Sul, sudeste</li>
+    <li data-lat="-3.7" data-lon="-38.5">América do Sul, nordeste</li>
+    <li data-lat="-33.4" data-lon="-70.6">América do Sul, oeste</li>
+    <li data-lat="4.7" data-lon="-74.1">América do Sul, norte</li>
+    <li data-lat="19.4" data-lon="-99.1">América do Norte, sul</li>
+    <li data-lat="38.9" data-lon="-77.4">América do Norte, leste</li>
+    <li data-lat="37.4" data-lon="-121.9">América do Norte, oeste</li>
+    <li data-lat="38.7" data-lon="-9.1">Europa, oeste</li>
+    <li data-lat="50.1" data-lon="8.7">Europa, centro</li>
+    <li data-lat="-26.2" data-lon="28.0">África, sul</li>
+    <li data-lat="1.35" data-lon="103.8">Ásia, sudeste</li>
+    <li data-lat="35.7" data-lon="139.7">Ásia, leste</li>
+  </ol>
+
+  <!-- @secao nav -->
+
+  <main id="conteudo">
+    <!-- @secao hero -->
+    <!-- @secao regioes -->
+    <!-- na ordem do menu: Experiência, Projetos, Serviços, Sobre, Contato -->
+    <!-- @secao experiencia -->
+    <!-- @secao projetos -->
+    <!-- @secao servicos -->
+    <!-- @secao sobre -->
+    <!-- @secao contato -->
+  </main>
+
+  <!-- @secao rodape -->
+
+  <div class="barra" aria-hidden="true"><span class="barra__polegar"></span></div>
+
+  <!-- o cursor próprio (src/ui/cursor.ts): só com mouse; o rótulo aparece sobre o globo do hero -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__anel"><span class="cursor__rotulo">Girar</span></span><span class="cursor__ponto"></span></div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

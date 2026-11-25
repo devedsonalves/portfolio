@@ -1,0 +1,125 @@
+/* experiência: uma linha por lugar, como os serviços e os projetos (fios, tipografia larga, nada de cards).
+   Grade de 12: quem (período, lugar, cargo) nas colunas 1 a 5, as entregas nas 7 a 12. */
+.experiencia {
+  position: relative;
+  padding: 14vh var(--spacing-margem) 12vh;
+}
+.experiencia__topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.experiencia__topo .corpo { max-width: 32ch; }
+
+.experiencia__lista {
+  margin: clamp(40px, 7vh, 84px) 0 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--color-fio);
+}
+.cargo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--spacing-gap);
+  padding: clamp(26px, 4.4vh, 52px) 0 clamp(30px, 5vh, 58px);
+  border-top: 1px solid var(--color-fio);
+}
+.cargo__quem { grid-column: 1 / span 5; }
+.cargo__feitos { grid-column: 7 / span 6; }
+
+.cargo__periodo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-stretch: var(--ui-largura);
+  font-size: var(--text-ui);
+  color: var(--color-tinta-3);
+}
+/* o ponto: contorno nos anteriores, aceso no atual (o acento é luz) */
+.cargo__ponto {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--color-tinta-3);
+}
+.cargo.is-atual .cargo__periodo { color: var(--color-tinta-2); }
+.cargo.is-atual .cargo__ponto {
+  background: var(--color-acento);
+  box-shadow: inset 0 0 0 1px var(--color-acento), 0 0 14px 3px var(--color-acento-brilho);
+  animation: respira-cargo 2.6s var(--ease-io) infinite;
+}
+@keyframes respira-cargo { 50% { box-shadow: inset 0 0 0 1px var(--color-acento), 0 0 6px 1px var(--color-acento-brilho); } }
+
+.cargo__lugar {
+  margin: 14px 0 0;
+  font-stretch: var(--larga);
+  font-weight: 450;
+  font-size: clamp(34px, 4.2vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-tinta);
+}
+.cargo__papel {
+  margin-top: 12px;
+  font-stretch: var(--lead-largura);
+  font-size: clamp(16px, 1.2vw, 19px);
+  color: var(--color-tinta-2);
+}
+
+.cargo__feitos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cargo__feitos .corpo {
+  position: relative;
+  padding-left: 22px;
+  color: var(--color-tinta-2);
+  max-width: 58ch;
+}
+/* marcador: um ponto pequeno no fio, nunca traço */
+.cargo__feitos .corpo::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.72em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-tinta-3);
+}
+.cargo__feitos strong { font-weight: 500; color: var(--color-tinta); }
+
+/* entrada: o bloco de quem sobe primeiro, as entregas uma a uma (core/revelar.ts põe .is-visivel no .cargo) */
+.cargo .cargo__quem,
+.cargo .cargo__feitos .corpo {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.cargo .cargo__feitos .corpo:nth-child(1) { transition-delay: 0.12s; }
+.cargo .cargo__feitos .corpo:nth-child(2) { transition-delay: 0.19s; }
+.cargo .cargo__feitos .corpo:nth-child(3) { transition-delay: 0.26s; }
+.cargo .cargo__feitos .corpo:nth-child(n + 4) { transition-delay: 0.33s; }
+.cargo.is-visivel .cargo__quem,
+.cargo.is-visivel .cargo__feitos .corpo { opacity: 1; transform: none; }
+
+@media (max-width: 760px) {
+  .experiencia { padding: 12vh var(--spacing-margem) 10vh; }
+  .experiencia__topo { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .cargo { display: block; }
+  .cargo__lugar { font-size: clamp(30px, 9vw, 40px); font-stretch: 112%; }
+  .cargo__feitos { margin-top: 24px; }
+  .cargo__feitos .corpo { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cargo .cargo__quem,
+  .cargo .cargo__feitos .corpo { opacity: 1; transform: none; transition: none; }
+  .cargo.is-atual .cargo__ponto { animation: none; }
+}

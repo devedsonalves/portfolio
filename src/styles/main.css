@@ -1,0 +1,39 @@
+/* Folha única do site, ligada por <link> no <head> do index.html (segura a primeira pintura até chegar). Nunca
+   importe CSS pelo TS: no dev do Vite ele chega depois dos módulos e a página pinta crua por um instante.
+
+   Tailwind v4 sem o preflight: o reset é o de base.css. As camadas, da mais fraca para a mais forte:
+     theme       os tokens (tokens.css, @theme)
+     base        reset, foco, camadas fixas
+     components  os componentes compartilhados e uma folha por seção, na ordem da página
+     utilities   as classes utilitárias do Tailwind (vencem os componentes: servem para ajustes no HTML)
+   Os arquivos da fonte e do Lenis ficam fora das camadas. */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@import './tokens.css';
+
+@import '@fontsource-variable/archivo/wdth.css';
+@import 'lenis/dist/lenis.css';
+
+@import './base.css' layer(base);
+@import './componentes.css' layer(components);
+@import './cursor.css' layer(components);
+
+@import '../sections/nav/nav.css' layer(components);
+@import '../sections/hero/hero.css' layer(components);
+@import '../sections/regioes/regioes.css' layer(components);
+@import '../sections/servicos/servicos.css' layer(components);
+@import '../sections/experiencia/experiencia.css' layer(components);
+@import '../sections/projetos/projetos.css' layer(components);
+@import '../sections/contato/contato.css' layer(components);
+@import '../sections/sobre/sobre.css' layer(components);
+@import '../sections/rodape/rodape.css' layer(components);
+
+/* o Tailwind procura classes só no HTML (index.html e as seções). Classe utilitária posta pelo TS precisa estar
+   escrita num HTML ou ganhar um @source para o arquivo dela. */
+@source '../../index.html';
+@source '../sections/**/*.html';
+
+/* abaixo de 760 px a página tem composição própria: celular:hidden, celular:mt-4 */
+@custom-variant celular (@media (max-width: 760px));

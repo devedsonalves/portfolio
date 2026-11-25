@@ -1,0 +1,7 @@
+node_modules
+dist
+_teste
+# prévia gerada por fonte/scripts/retrato.py
+fonte/fotos/*-tratada.jpg
+# dados brutos da NASA para fonte/scripts/texturas.py (grandes demais para o git)
+fonte/nasa/

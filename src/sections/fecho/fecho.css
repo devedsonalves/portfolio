@@ -1,0 +1,67 @@
+/* fecho: o nome digitado na busca grande, com o ponto "no ar", a frase e os botões */
+.fecho {
+  position: relative;
+  padding: 22vh var(--spacing-margem) 16vh;
+}
+.fecho__nome { position: relative; }
+.fecho__ponto {
+  /* o ponto aceso do status: o seu site, no ar (na altura das minúsculas) */
+  position: absolute;
+  left: calc(var(--spacing-margem) * -0.62);
+  top: 60%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.6s var(--ease-out) 0.7s, transform 0.8s var(--ease-snap) 0.7s;
+}
+.fecho.is-visivel .fecho__ponto { opacity: 1; transform: none; }
+.fecho__dominio {
+  font-stretch: var(--larga);
+  font-weight: 450;
+  font-size: 9vw;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  color: var(--color-tinta);
+  opacity: 0;
+  transform: translate3d(0, 4%, 0);
+  transition: opacity 1s var(--ease-out), transform 1.1s var(--ease-out);
+}
+.fecho.is-visivel .fecho__dominio { opacity: 1; transform: none; }
+.fecho__linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(26px, 4.4vh, 48px);
+}
+.fecho__frase {
+  font-stretch: var(--lead-largura);
+  font-size: var(--text-lead);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--color-tinta-2);
+}
+.fecho__acoes { display: flex; gap: 8px; }
+.fecho__linha .fecho__frase,
+.fecho__linha .fecho__acoes {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.8s var(--ease-out) 0.25s, transform 0.9s var(--ease-out) 0.25s;
+}
+.fecho__linha.is-visivel .fecho__frase,
+.fecho__linha.is-visivel .fecho__acoes { opacity: 1; transform: none; }
+.fecho__acoes .botao { opacity: 1; transform: none; }
+
+@media (max-width: 760px) {
+  .fecho { padding: 16vh var(--spacing-margem) 12vh; }
+  .fecho__frase { font-size: 19px; }
+  .fecho__ponto { position: relative; display: block; left: 0; top: 0; margin: 0 0 16px; }
+  .fecho__linha { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fecho__dominio, .fecho__linha .fecho__frase, .fecho__linha .fecho__acoes { opacity: 1; transform: none; transition: none; }
+}

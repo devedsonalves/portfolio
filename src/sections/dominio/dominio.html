@@ -1,0 +1,71 @@
+<!-- 3. SEU PROJETO: o visitante digita o nome do negócio dele; o nome segue para o resumo dos serviços e o fecho -->
+<section class="dominio" id="dominio" data-secao="dominio">
+  <div class="dominio__topo" data-revela>
+    <h2 class="titulo">
+      <span class="linha"><span>Qual é o</span></span>
+      <span class="linha"><span>seu projeto?</span></span>
+    </h2>
+    <p class="corpo">Digite o nome do seu negócio e escolha o endereço. Do domínio ao deploy, eu deixo tudo no ar.</p>
+  </div>
+
+  <form class="busca" role="search" novalidate data-busca>
+    <label class="busca__rotulo" for="busca-nome">Nome do seu projeto</label>
+    <div class="busca__linha">
+      <div class="busca__campo">
+        <span class="busca__espelho" aria-hidden="true"></span>
+        <input class="busca__input" id="busca-nome" name="nome" type="text" inputmode="url" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="40" placeholder="seunegocio" aria-describedby="busca-erro">
+        <span class="busca__sufixo" aria-hidden="true"><span class="busca__ponto">.<span class="busca__luz"></span></span><span data-sufixo-resto>com.br</span></span>
+        <span class="busca__cursor" aria-hidden="true"></span>
+      </div>
+      <button class="botao-seta busca__enviar" type="submit" aria-label="Ver o endereço">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 4.5 16.5 10 11 15.5"/></svg>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 4.5 16.5 10 11 15.5"/></svg>
+      </button>
+    </div>
+    <p class="busca__erro" id="busca-erro" role="alert"></p>
+  </form>
+
+  <!-- a disponibilidade é uma simulação (busca.ts); data-acao e data-feito são os rótulos do botão -->
+  <ul class="tlds" aria-live="polite" data-tlds>
+    <li class="tld" data-tld=".com.br" data-preco="0">
+      <button class="tld__escolher" type="button" aria-pressed="true">
+        <span class="tld__ponto" aria-hidden="true"></span>
+        <span class="tld__nome">.com.br</span>
+      </button>
+      <span class="tld__estado">Digite um nome</span>
+      <span class="tld__preco">para vender no Brasil</span>
+      <button class="tld__acao" type="button" data-acao="Quero esse" data-feito="Anotado" disabled><span class="rola" data-texto="Quero esse">Quero esse</span></button>
+      <span class="tld__sugestoes"></span>
+    </li>
+    <li class="tld" data-tld=".com" data-preco="0">
+      <button class="tld__escolher" type="button" aria-pressed="false">
+        <span class="tld__ponto" aria-hidden="true"></span>
+        <span class="tld__nome">.com</span>
+      </button>
+      <span class="tld__estado">Digite um nome</span>
+      <span class="tld__preco">para o mundo todo</span>
+      <button class="tld__acao" type="button" data-acao="Quero esse" data-feito="Anotado" disabled><span class="rola" data-texto="Quero esse">Quero esse</span></button>
+      <span class="tld__sugestoes"></span>
+    </li>
+    <li class="tld" data-tld=".dev" data-preco="0">
+      <button class="tld__escolher" type="button" aria-pressed="false">
+        <span class="tld__ponto" aria-hidden="true"></span>
+        <span class="tld__nome">.dev</span>
+      </button>
+      <span class="tld__estado">Digite um nome</span>
+      <span class="tld__preco">para produto digital</span>
+      <button class="tld__acao" type="button" data-acao="Quero esse" data-feito="Anotado" disabled><span class="rola" data-texto="Quero esse">Quero esse</span></button>
+      <span class="tld__sugestoes"></span>
+    </li>
+    <li class="tld" data-tld=".app" data-preco="0">
+      <button class="tld__escolher" type="button" aria-pressed="false">
+        <span class="tld__ponto" aria-hidden="true"></span>
+        <span class="tld__nome">.app</span>
+      </button>
+      <span class="tld__estado">Digite um nome</span>
+      <span class="tld__preco">para aplicativo</span>
+      <button class="tld__acao" type="button" data-acao="Quero esse" data-feito="Anotado" disabled><span class="rola" data-texto="Quero esse">Quero esse</span></button>
+      <span class="tld__sugestoes"></span>
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,253 @@
+/* Componentes compartilhados: a palavra gigante, os títulos e o corpo, a revelação por linha, o link com fio, o
+   rótulo que rola, os botões, o ponto de luz e a foto esfumada. Cada seção tem a sua folha ao lado do HTML dela. */
+/* palavra gigante em baixo contraste (o "Código" do hero) */
+.palavra {
+  margin: 0;
+  font-stretch: var(--larga);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.012em;
+  white-space: nowrap;
+  color: var(--color-fantasma);
+  user-select: none;
+  pointer-events: none;
+}
+main > section > .palavra { z-index: 0; }
+
+/* ---------- tipo ---------- */
+.titulo {
+  font-stretch: var(--titulo-largura);
+  font-weight: 450;
+  font-size: var(--text-titulo);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  white-space: nowrap;
+}
+.corpo {
+  font-size: var(--text-corpo);
+  line-height: 1.5;
+  color: var(--color-tinta-2);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+.lead {
+  font-stretch: var(--lead-largura);
+  font-size: var(--text-lead);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+/* revelação por linha: a linha sobe de dentro da máscara (folga para acento e descendente) */
+.linha {
+  display: block;
+  overflow: hidden;
+  padding: 0.14em 0 0.22em;
+  margin: -0.14em 0 -0.22em;
+}
+.linha > span {
+  display: inline-block;
+  transform: translate3d(0, 112%, 0);
+  transition: transform var(--dur-entra) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms + var(--atraso, 0ms));
+}
+.is-visivel .linha > span,
+.is-visivel.linha > span { transform: none; }
+
+[data-revela] .corpo,
+[data-revela] .botao,
+.revela-suave {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--atraso-corpo, 180ms));
+}
+[data-revela].is-visivel .corpo,
+[data-revela].is-visivel .botao,
+.is-visivel .revela-suave,
+.revela-suave.is-visivel {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- link de texto: fio que desenha da esquerda e sai pela direita ---------- */
+.link {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  font-stretch: var(--ui-largura);
+  font-weight: 450;
+  font-size: var(--text-ui);
+  line-height: 1.3;
+  padding: 4px 0;
+  color: var(--color-tinta);
+  --sublinha: 2px; /* a distância do sublinhado até o pé da caixa (cresce quando o link ganha altura de toque) */
+  background: linear-gradient(currentColor, currentColor) no-repeat right calc(100% - var(--sublinha)) / 0 1px;
+  transition: background-size var(--dur-micro) var(--ease-snap), color var(--dur-micro) var(--ease-snap), transform 0.2s var(--ease-snap);
+}
+:where(html:not(.is-scrolling)) .link:hover,
+.link.is-toque,
+.link:focus-visible {
+  background-position: left calc(100% - var(--sublinha));
+  background-size: 100% 1px;
+}
+.link:active { transform: scale(0.97); }
+.link:focus-visible { border-radius: 3px; outline-offset: 5px; }
+
+/* ---------- texto que rola no hover (o rótulo sobe e a cópia entra por baixo) ---------- */
+.rola {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  line-height: 1.25;
+}
+.rola__a,
+.rola__b {
+  display: block;
+  transition: transform var(--dur-micro) var(--ease-snap);
+}
+.rola__b {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+}
+
+/* ---------- botão pílula (o do hero) ---------- */
+.botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 24px;
+  border-radius: var(--radius-pilula);
+  background: var(--color-tinta);
+  color: var(--color-sobre-acento);
+  font-stretch: var(--ui-largura);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-snap), background-color var(--dur-micro) var(--ease-snap), box-shadow var(--dur-micro) var(--ease-snap);
+}
+.botao::before {
+  /* a luz quente que sobe por dentro do botão no hover */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(120% 140% at 50% 120%, color-mix(in srgb, var(--color-acento) 55%, transparent), color-mix(in srgb, var(--color-acento) 0%, transparent) 62%);
+  opacity: 0;
+  transform: translateY(30%);
+  transition: opacity var(--dur-micro) var(--ease-snap), transform 0.6s var(--ease-out);
+}
+:where(html:not(.is-scrolling)) .botao:hover,
+.botao.is-toque,
+.botao:focus-visible {
+  box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--color-acento) 55%, transparent);
+}
+:where(html:not(.is-scrolling)) .botao:hover::before,
+.botao.is-toque::before,
+.botao:focus-visible::before { opacity: 1; transform: none; }
+:where(html:not(.is-scrolling)) .botao:hover .rola__a,
+:where(html:not(.is-scrolling)) .botao:hover .rola__b,
+.botao.is-toque .rola__a,
+.botao.is-toque .rola__b,
+.botao:focus-visible .rola__a,
+.botao:focus-visible .rola__b,
+:where(html:not(.is-scrolling)) .nav__menu:hover .rola__a,
+:where(html:not(.is-scrolling)) .nav__menu:hover .rola__b,
+.nav__menu.is-toque .rola__a,
+.nav__menu.is-toque .rola__b { transform: translateY(-100%); }
+.botao:active { transform: scale(0.97); }
+.botao:focus-visible { outline-offset: 4px; }
+.botao[disabled],
+.botao.is-ocupado { pointer-events: none; }
+
+/* botão redondo da seta: a seta sai pela direita e a cópia entra pela esquerda */
+.botao-seta {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--color-tinta);
+  color: var(--color-sobre-acento);
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-snap), background-color var(--dur-micro) var(--ease-snap), box-shadow var(--dur-micro) var(--ease-snap);
+}
+.botao-seta svg {
+  grid-area: 1 / 1;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.5s var(--ease-snap);
+}
+.botao-seta svg + svg { transform: translateX(-180%); }
+:where(html:not(.is-scrolling)) .botao-seta:hover svg:first-child,
+.botao-seta.is-toque svg:first-child,
+.botao-seta:focus-visible svg:first-child { transform: translateX(180%); }
+:where(html:not(.is-scrolling)) .botao-seta:hover svg + svg,
+.botao-seta.is-toque svg + svg,
+.botao-seta:focus-visible svg + svg { transform: none; }
+:where(html:not(.is-scrolling)) .botao-seta:hover,
+.botao-seta.is-toque,
+.botao-seta:focus-visible { box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--color-acento) 55%, transparent); }
+.botao-seta:active { transform: scale(0.94); }
+
+/* ponto de luz (status, plano escolhido) */
+.ponto {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  box-shadow: 0 0 0 0 var(--color-acento-brilho), 0 0 14px 2px var(--color-acento-brilho);
+  flex: none;
+}
+.ponto--vivo { animation: respira 2.8s var(--ease-io) infinite; }
+@keyframes respira {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-acento) 45%, transparent), 0 0 10px 1px color-mix(in srgb, var(--color-acento) 35%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-acento) 0%, transparent), 0 0 18px 4px color-mix(in srgb, var(--color-acento) 50%, transparent); }
+}
+
+/* foto: borda esfumada no preto, sem retângulo */
+.foto { position: relative; overflow: hidden; }
+.foto img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (prefers-reduced-motion: reduce) {
+  .linha > span { transform: none; transition: none; }
+  [data-revela] .corpo,
+  [data-revela] .botao,
+  .revela-suave { opacity: 1; transform: none; transition: none; }
+  .ponto--vivo { animation: none; }
+}
+
+/* anel de foco com canto suave nos clicáveis de texto */
+.nav__marca:focus-visible,
+.tld__escolher:focus-visible,
+.rodape__status:focus-visible { border-radius: 4px; outline-offset: 6px; }
+
+/* Toque: no celular todo alvo tem pelo menos 44 px de altura. Nos links do rodapé, a altura vem do padding (o
+   sublinhado acompanha pela --sublinha) e o espaço entre eles sai do gap. */
+@media (max-width: 760px) {
+  .nav__marca,
+  .nav__menu,
+  .tld__escolher,
+  .rodape__status { min-height: 44px; }
+  .pular { min-height: 44px; display: inline-flex; align-items: center; }
+  .rodape__col { gap: 0; }
+  .rodape .link { padding: 14px 0; --sublinha: 12px; }
+  .rodape__base-links { gap: 20px; }
+}

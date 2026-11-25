@@ -1,0 +1,72 @@
+/* Tokens: o tema do Tailwind. A página inteira usa só estas variáveis, no CSS (var(--color-tinta)) e nas classes
+   utilitárias (text-tinta, bg-preto, ease-snap, text-titulo, px-margem, celular:hidden). Os padrões do Tailwind
+   (cores, fontes, curvas) foram zerados: não existe cor fora desta lista.
+   O acento é a única cor e é sempre luz (os pontos do globo, o ponto do ".com", o anel de foco), nunca fundo de
+   bloco. O globo lê o --color-acento: trocar aqui troca os pontos acesos. Ao mudar o preto, mude também o fundo
+   inline do <head> do index.html. */
+@theme static {
+  --color-*: initial;
+  /* Jet Black, neutro (o degradê do topo continua pela página) */
+  --color-preto-topo: #161617;
+  --color-preto: #0c0c0d;
+  --color-preto-fim: #0a0a0b;
+  --color-fantasma: #222223; /* palavra gigante em baixo contraste */
+
+  /* texto: Smoke Grey e o branco fumaça */
+  --color-tinta: #ecece9;
+  --color-tinta-2: #9b9c98;
+  --color-tinta-3: #6b6c69;
+  --color-fio: color-mix(in srgb, var(--color-tinta) 14%, transparent);
+  --color-fio-forte: color-mix(in srgb, var(--color-tinta) 32%, transparent);
+
+  /* o único acento, Cherry Red: um pouco mais claro que o cereja de tinta (#d2042d) para brilhar sobre o preto */
+  --color-acento: #e8294c;
+  --color-acento-claro: #ffd9df; /* o miolo dos pontos acesos */
+  --color-acento-brilho: color-mix(in srgb, var(--color-acento) 45%, transparent);
+  --color-sobre-acento: #0f0f10; /* texto sobre o botão claro */
+  --color-apagado: #29292a; /* o "seunegocio" da busca quando o campo ganha foco */
+
+  /* tipo: uma família, eixo de largura (font-stretch de 62% a 125%) */
+  --font-*: initial;
+  --font-sans: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+
+  --text-titulo: clamp(34px, 3.9vw, 64px);
+  --text-lead: clamp(20px, 1.95vw, 30px);
+  --text-corpo: clamp(15px, 1.12vw, 17px);
+  --text-ui: clamp(13px, 0.98vw, 15px);
+  --text-pequeno: 13px;
+
+  /* grade de 12 colunas */
+  --spacing-margem: clamp(20px, 3.9vw, 72px);
+  --spacing-gap: clamp(14px, 1.65vw, 24px);
+
+  /* curvas da marca: entradas, trocas e microinterações */
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.3, 0.9, 0.2, 1);
+
+  --radius-pilula: 999px;
+}
+
+/* o que não é tema do Tailwind: larguras da fonte, tempos e medidas da página */
+:root {
+  --larga: 125%;
+  --titulo-largura: 118%;
+  --lead-largura: 108%;
+  --ui-largura: 104%;
+
+  --dur-entra: 0.9s;
+  --dur-micro: 0.45s;
+
+  --coluna: calc((100vw - 2 * var(--spacing-margem) - 11 * var(--spacing-gap)) / 12);
+  --nav-h: 96px;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --nav-h: 64px;
+    --text-titulo: clamp(30px, 8.6vw, 40px);
+    --text-lead: clamp(22px, 6.6vw, 28px);
+  }
+}

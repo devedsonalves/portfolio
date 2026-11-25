@@ -1,0 +1,33 @@
+/* regiões: o globo fica no meio da tela (camada fixa) e as frases passam pelos lados */
+.regioes {
+  position: relative;
+  height: 210vh;
+}
+.regioes__bloco {
+  position: absolute;
+  /* a coluna vai da margem até perto do globo */
+  width: calc((100vw - var(--globo-regioes, 600px)) / 2 - var(--spacing-margem) - 36px);
+}
+@media (min-width: 761px) {
+  .regioes__bloco .titulo { font-size: min(var(--text-titulo), calc(((100vw - var(--globo-regioes, 600px)) / 2 - var(--spacing-margem) - 36px) / 8.2)); }
+}
+.regioes__bloco--a { left: var(--spacing-margem); top: 46vh; }
+.regioes__bloco--b { right: var(--spacing-margem); top: 128vh; }
+.regioes__bloco .titulo { margin-bottom: 22px; }
+.regioes__bloco .corpo { max-width: 30ch; }
+
+@media (max-width: 760px) {
+  .regioes {
+    height: auto;
+    padding: 74vh var(--spacing-margem) 26vh;
+  }
+  .regioes__bloco {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: auto;
+    min-width: 0;
+  }
+  .regioes__bloco--b { margin-top: 12vh; }
+}

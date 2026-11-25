@@ -1,0 +1,62 @@
+/* sobre: o retrato entra pela direita, esfumado no preto, com parallax leve; o texto e a stack à esquerda */
+.sobre {
+  position: relative;
+  min-height: 108vh;
+  display: flex;
+  align-items: center;
+}
+.sobre__foto {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 64%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 42%), linear-gradient(180deg, transparent 0, #000 18%, #000 78%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, #000 42%), linear-gradient(180deg, transparent 0, #000 18%, #000 78%, transparent 100%);
+  mask-composite: intersect;
+}
+.sobre__foto img { object-position: 30% 40%; }
+@supports (animation-timeline: view()) {
+  .sobre__foto img {
+    height: 114%;
+    animation: paralaxe-sobre linear both;
+    animation-timeline: view();
+  }
+}
+@keyframes paralaxe-sobre {
+  from { transform: translate3d(0, -7%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+.sobre__conteudo {
+  width: 100%;
+  padding: 14vh var(--spacing-margem);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--spacing-gap);
+}
+.sobre__texto { grid-column: 1 / span 5; }
+.sobre__texto .corpo { margin-top: 20px; max-width: 34ch; }
+.sobre__texto .botao { margin-top: 0; }
+/* a stack: uma linha menor, em cinza; o currículo como link ao lado do botão */
+.sobre__texto .sobre__stack { max-width: none; margin-top: 14px; font-size: var(--text-ui); font-stretch: var(--ui-largura); color: var(--color-tinta-3); }
+.sobre__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 30px; }
+
+@media (max-width: 760px) {
+  .sobre { display: block; min-height: 0; }
+  .sobre__foto {
+    position: relative !important;
+    width: 100%;
+    aspect-ratio: 6 / 7;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 64%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 64%, transparent 100%);
+  }
+  .sobre__foto img { object-position: 50% 40%; }
+  .sobre__conteudo { display: block; padding: 0 var(--spacing-margem) 10vh; margin-top: -9vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sobre__foto img { animation: none; height: 100%; }
+}

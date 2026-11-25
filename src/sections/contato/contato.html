@@ -1,0 +1,38 @@
+<!-- 5. CONTATO: o e-mail é a peça grande da seção (data-ajusta: ocupa a largura útil); o formulário vem por baixo -->
+<section class="contato" id="contato" data-secao="contato">
+  <div class="contato__topo" data-revela>
+    <p class="contato__status revela-suave"><span class="ponto ponto--vivo" aria-hidden="true"></span><span>Disponível para vagas e projetos</span></p>
+    <h2 class="titulo">
+      <span class="linha"><span>Vaga ou projeto,</span></span>
+      <span class="linha"><span>me conta.</span></span>
+    </h2>
+    <p class="corpo">Uma vaga no seu time, um site novo ou um sistema que ainda não existe. Escreva em poucas palavras que eu respondo.</p>
+  </div>
+
+  <div class="contato__direto" data-revela>
+    <a class="contato__email" href="mailto:devedsonalves@gmail.com" data-ajusta><span>devedsonalves</span><span class="contato__dominio">@gmail.com</span></a>
+    <div class="contato__base">
+      <button class="link contato__copiar" type="button" data-copiar="devedsonalves@gmail.com">Copiar e-mail</button>
+      <a class="link contato__whats" href="https://wa.me/5588993583361" target="_blank" rel="noopener" aria-label="WhatsApp: +55 88 99358-3361 (abre em outra aba)">WhatsApp <span class="contato__numero">+55 (88) 99358-3361</span></a>
+      <span class="contato__copiado" role="status"></span>
+    </div>
+  </div>
+
+  <!-- o envio é fictício (contato.ts): ligar a um destino real (e-mail, Formspree, WhatsApp) antes de publicar -->
+  <form class="linha-form" novalidate data-contato data-revela>
+    <label class="campo">
+      <span class="campo__rotulo">Sobre o que é</span>
+      <input class="campo__input" name="pedido" type="text" data-vazio="Conte em poucas palavras." data-ruim="Escreva um pouco mais." autocomplete="off" placeholder="vaga de dev full-stack">
+      <span class="campo__linha" aria-hidden="true"></span>
+      <span class="campo__erro" aria-live="polite"></span>
+    </label>
+    <label class="campo">
+      <span class="campo__rotulo">Seu e-mail</span>
+      <input class="campo__input" name="email" type="email" data-vazio="Preciso do seu e-mail para responder." data-ruim="Esse e-mail parece incompleto." autocomplete="email" placeholder="voce@email.com">
+      <span class="campo__linha" aria-hidden="true"></span>
+      <span class="campo__erro" aria-live="polite"></span>
+    </label>
+    <button class="botao" type="submit"><span class="rola" data-texto="Enviar">Enviar</span></button>
+    <p class="linha-form__ok" role="status"><span class="ponto" aria-hidden="true"></span><span>Recebido. Eu respondo para <b data-email-ok></b>.</span></p>
+  </form>
+</section>

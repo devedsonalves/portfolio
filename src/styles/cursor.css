@@ -1,0 +1,84 @@
+/* Cursor próprio (src/ui/cursor.ts): só com mouse. O ponto segue a mão; o anel vem atrás.
+   O acento é luz: só o ponto vira --color-acento sobre um clicável. Em campo de texto volta o cursor do sistema. */
+.cursor { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  html.tem-cursor,
+  html.tem-cursor * { cursor: none !important; }
+  html.tem-cursor :is(input:not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]) { cursor: text !important; }
+
+  .cursor {
+    display: block;
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+  }
+  .cursor.is-visivel { opacity: 1; }
+  .cursor.is-texto { opacity: 0; }
+
+  .cursor__ponto,
+  .cursor__anel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+  }
+  /* o tamanho muda por dentro (::before), o transform de fora é só a posição */
+  .cursor__ponto::before,
+  .cursor__anel::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(var(--escala, 1));
+    transition: transform var(--dur-micro) var(--ease-snap), background-color var(--dur-micro) var(--ease-snap),
+      border-color var(--dur-micro) var(--ease-snap), box-shadow var(--dur-micro) var(--ease-snap);
+  }
+  .cursor__ponto::before {
+    width: 6px;
+    height: 6px;
+    background: var(--color-tinta);
+  }
+  .cursor__anel::before {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--color-fio-forte);
+  }
+  .cursor__rotulo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    font-size: 12.5px;
+    font-stretch: var(--ui-largura);
+    letter-spacing: 0.01em;
+    color: var(--color-tinta);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
+  /* sobre um clicável: o anel abre e o ponto acende */
+  .cursor.is-clicavel .cursor__anel::before { --escala: 1.65; border-color: color-mix(in srgb, var(--color-tinta) 55%, transparent); }
+  .cursor.is-clicavel .cursor__ponto::before {
+    background: var(--color-acento);
+    box-shadow: 0 0 10px 2px var(--color-acento-brilho);
+  }
+
+  /* sobre o globo do hero: "Girar" dentro do anel, o ponto some */
+  .cursor.is-giravel .cursor__anel::before { --escala: 2.3; border-color: color-mix(in srgb, var(--color-tinta) 45%, transparent); }
+  .cursor.is-giravel .cursor__ponto::before { --escala: 0; }
+  .cursor.is-giravel .cursor__rotulo { opacity: 1; }
+  .cursor.is-girando .cursor__anel::before { --escala: 1.8; }
+
+  /* segurando o botão */
+  .cursor.is-apertado .cursor__anel::before { --escala: 0.8; }
+  .cursor.is-apertado.is-clicavel .cursor__anel::before { --escala: 1.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor__ponto::before,
+  .cursor__anel::before { transition: none; }
+}

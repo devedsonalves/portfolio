@@ -1,0 +1,132 @@
+/* Base: o reset (o preflight do Tailwind fica desligado; este é o reset do projeto), o foco, as camadas fixas
+   (o canvas do globo, o ponto que voa) e a barra de rolagem própria. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-width: none; /* a barra é a nossa (ui/barra.ts) */
+  overflow-x: clip; /* nada alarga a página no celular */
+}
+html::-webkit-scrollbar { display: none; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: linear-gradient(180deg, var(--color-preto-topo) 0, var(--color-preto) 100vh, var(--color-preto) calc(100% - 100vh), var(--color-preto-fim) 100%);
+  background-color: var(--color-preto);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-size: var(--text-corpo);
+  font-stretch: 100%;
+  line-height: 1.5;
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; }
+p, h1, h2, h3 { margin: 0; font-weight: inherit; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input { font: inherit; color: inherit; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+b { font-weight: 550; }
+
+::selection { background: var(--color-acento); color: var(--color-preto); }
+
+/* foco visível em tudo, na cor da luz */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 4px;
+}
+
+.pular {
+  position: fixed;
+  left: var(--spacing-margem);
+  top: 12px;
+  z-index: 60;
+  padding: 10px 16px;
+  border-radius: var(--radius-pilula);
+  background: var(--color-tinta);
+  color: var(--color-preto);
+  font-stretch: var(--ui-largura);
+  font-weight: 500;
+  font-size: var(--text-ui);
+  transform: translateY(-160%);
+  transition: transform var(--dur-micro) var(--ease-snap);
+}
+.pular:focus-visible { transform: none; }
+
+/* ---------- camadas ---------- */
+/* o globo é fixo e fica entre as palavras gigantes (z 0) e o resto do conteúdo (z 2) */
+.globo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+}
+.globo.is-pronto { opacity: 1; }
+
+main > section > *,
+.rodape > * { position: relative; z-index: 2; }
+
+/* o ponto que sai do globo e pousa como cursor da busca */
+.ponto-voo {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-acento-claro);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-acento) 90%, transparent), 0 0 16px 5px color-mix(in srgb, var(--color-acento) 55%, transparent), 0 0 40px 10px color-mix(in srgb, var(--color-acento) 18%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+.ponto-voo.is-voando { opacity: 1; }
+
+
+/* barra de rolagem própria, fina e sobreposta */
+.barra {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  z-index: 70;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+.barra.is-ativa { opacity: 1; }
+@media (hover: hover) { .barra:hover { opacity: 1; } }
+.barra__polegar {
+  position: absolute;
+  right: 3px;
+  top: 0;
+  width: 3px;
+  min-height: 40px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--color-tinta) 32%, transparent);
+  transition: width 0.25s var(--ease-snap), background-color 0.25s var(--ease-snap);
+  will-change: transform;
+}
+.barra.is-arrastando .barra__polegar { width: 6px; background: color-mix(in srgb, var(--color-tinta) 55%, transparent); }
+@media (hover: hover) { .barra:hover .barra__polegar { width: 6px; background: color-mix(in srgb, var(--color-tinta) 55%, transparent); } }
+@media (hover: none) { .barra { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .globo { transition: none; }
+}
